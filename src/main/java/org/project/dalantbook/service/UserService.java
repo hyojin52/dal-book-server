@@ -7,9 +7,6 @@ import org.project.dalantbook.domain.UserGroupEntity;
 import org.project.dalantbook.domain.enums.UserRole;
 import org.project.dalantbook.repository.UserGroupRepository;
 import org.project.dalantbook.repository.UserRepository;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,7 +15,6 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final UserGroupRepository userGroupRepository;
-    private final BCryptPasswordEncoder encoder;
 
 
     public UserEntity findByUsername(String username) {
@@ -29,7 +25,7 @@ public class UserService {
         UserGroupEntity userGroupEntity = userGroupRepository.findById(user.getGroupId()).get();
         UserEntity userEntity = new UserEntity();
         userEntity.setUserName("sara");
-        userEntity.setPassword(encoder.encode(user.getPassword()));
+        userEntity.setPassword(user.getPassword());
         userEntity.setUserActiveYn(true);
         userEntity.setBirthDate(user.getBirthdate());
         userEntity.setMobileNumber(user.getMobileNumber());
