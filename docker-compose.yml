@@ -1,16 +1,23 @@
-version: '3'
+version: "3.1"
+
 services:
-  db:
-    image: mysql:8.0
-    container_name: dalant-book-mysql
-    restart: always
+  maria :
+    image: docker.io/bitnami/mariadb:11.2
+    container_name: mariadb
     ports:
-      - 3309:3306
-    environment:
-      MYSQL_DATABASE: dalant-book
-      MYSQL_ROOT_PASSWORD: root123!@#
-      TZ: Asia/Seoul
+      - ${DB_PORT}:3306
     volumes:
-      - ./db/mysql/data:/var/lib/mysql
-      - ./db/mysql/init:/docker-entrypoint-initdb.d
-    platform: linux/x86_64
+      - ~/docker/mariadb/etc/mysql/conf.d:/etc/mysql/conf.d:ro
+      - ~/docker/mariadb/var/lib/mysql:/var/lib/mysql
+      - ~/docker/mariadb/var/log/maria:/var/log/maria
+    environment:
+      - TZ="Asia/Seoul"
+      - ALLOW_EMPTY_PASSWORD=no
+      - MARIADB_ROOT_PASSWORD=${DB_PASSWORD}
+      - MARIADB_DATABASE=${DB}
+    networks:
+      - backend
+    restart: always
+
+networks:
+  backend:
