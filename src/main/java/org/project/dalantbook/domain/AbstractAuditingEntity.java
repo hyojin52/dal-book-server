@@ -23,22 +23,15 @@ import java.util.Date;
 @Setter
 public class AbstractAuditingEntity implements Serializable {
 
-    @CreatedBy
-    @Column(name = "CREATED_BY", nullable = false, length = 100, updatable = false)
-    private String createdBy;
 
     @CreatedDate
-    @Column(name = "CREATED_DT", nullable = false, updatable = false)
+    @Column(name = "created_at", nullable = false, updatable = false)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd@HH:mm:ss", timezone = "Asia/Seoul")
-    private LocalDateTime createdDt = new Date().toInstant().atZone(ZoneId.of("Asia/Seoul")).toLocalDateTime();
-
-    @LastModifiedBy
-    @Column(name = "UPDATED_BY", length = 100)
-    private String updatedBy;
+    private LocalDateTime createdAt = new Date().toInstant().atZone(ZoneId.of("Asia/Seoul")).toLocalDateTime();
 
     @LastModifiedDate
-    @Column(name = "UPDATED_DT")
+    @Column(name = "updated_at")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd@HH:mm:ss", timezone = "Asia/Seoul")
-    private LocalDateTime updatedDt = new Date().toInstant().atZone(ZoneId.of("Asia/Seoul")).toLocalDateTime();
+    private LocalDateTime updatedAt = new Date().toInstant().atZone(ZoneId.of("Asia/Seoul")).toLocalDateTime();
 
 }

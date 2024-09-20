@@ -5,17 +5,29 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "CHURCH")
+@Table(name = "Church")
 @Getter
 @Setter
 public class ChurchEntity extends AbstractAuditingEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "CHURCH_ID", columnDefinition = "VARCHAR(100)", nullable = false, length = 100)
-    private String churchId;
+    @Column(name = "id", columnDefinition = "VARCHAR(100)", nullable = false, length = 100)
+    private String id;
 
-    @Column(name = "CHURCH_NAME", length = 50, nullable = false)
-    private String churchName;
+    @Column(name = "name", length = 50, nullable = false)
+    private String name;
+
+    @Column(name = "pastor", length = 20, nullable = false)
+    private String pastor;
+
+    @Column(name = "denomination", length = 30, nullable = false)
+    private String denomination;
+
+    @Column(name = "address", length = 100, nullable = false)
+    private String address;
+
+    @Column(name = "phone", length = 20)
+    private String phone;
 
 }
