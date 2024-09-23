@@ -2,6 +2,7 @@ package org.project.dalantbook.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.project.dalantbook.controller.request.ChurchRequest;
+import org.project.dalantbook.controller.response.ChurchResponse;
 import org.project.dalantbook.controller.response.Response;
 import org.project.dalantbook.service.ChurchService;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,8 +18,7 @@ public class ChurchController {
     private final ChurchService churchService;
 
     @PostMapping
-    public Response create(@RequestBody ChurchRequest request) {
-        churchService.create(request);
-        return Response.success();
+    public Response<ChurchResponse> create(@RequestBody ChurchRequest request) {
+        return Response.success(churchService.create(request));
     }
 }
