@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import org.project.dalantbook.domain.OfferingEntity;
 
+import java.time.LocalDate;
+
 @AllArgsConstructor
 @Data
 @Builder
@@ -14,6 +16,7 @@ public class OfferingResponse {
     private String memo;
     private int amount;
     private String type;
+    private LocalDate date;
 
     public static OfferingResponse of(OfferingEntity entity) {
         return OfferingResponse.builder()
@@ -22,6 +25,7 @@ public class OfferingResponse {
                 .memo(entity.getMemo())
                 .amount(entity.getAmount())
                 .type(entity.getType())
+                .date(LocalDate.from(entity.getDate()))
                 .build();
     }
 }
