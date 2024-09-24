@@ -9,11 +9,15 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MariaDBDialect
         format_sql: true
+        order_inserts: true
+        order_updates: true
+        jdbc:
+          batch_size: 100
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
     hikari:
       maximum-pool-size: 4
-    url: jdbc:mariadb://${DB_HOST}:${DB_PORT}/${DB}?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Asia/Seoul
+    url: jdbc:mariadb://${DB_HOST}:${DB_PORT}/${DB}?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=Asia/Seoul&rewriteBatchedStatements=true
     username: root
     password: ${DB_PASSWORD}
 

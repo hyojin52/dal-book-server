@@ -9,6 +9,7 @@ import org.project.dalantbook.controller.response.OfferingResponse;
 import org.project.dalantbook.domain.ChurchMemberEntity;
 import org.project.dalantbook.domain.OfferingEntity;
 import org.project.dalantbook.domain.respository.ChurchMemberRepository;
+import org.project.dalantbook.domain.respository.OfferingBulkRepository;
 import org.project.dalantbook.domain.respository.OfferingRepository;
 import org.project.dalantbook.exception.DalantBookApplicationException;
 import org.project.dalantbook.exception.ErrorCode;
@@ -27,6 +28,7 @@ public class OfferingService {
 
     private final ChurchMemberRepository churchMemberRepository;
     private final OfferingRepository offeringRepository;
+    private final OfferingBulkRepository offeringBulkRepository;
 
 
     public List<ChurchMemberResponse> getPrepareOfferings(String type, LocalDate date) {
@@ -50,7 +52,7 @@ public class OfferingService {
             offeringEntity.setMemo(userInfo.getMemo());
             offeringEntities.add(offeringEntity);
         }
-        offeringRepository.saveAll(offeringEntities);
+        offeringBulkRepository.saveAll(offeringEntities);
     }
 
     public void creteOffering(OfferingCreateRequest request) {
