@@ -4,8 +4,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.Where;
 
 import java.time.LocalDateTime;
 
@@ -13,7 +11,7 @@ import java.time.LocalDateTime;
 @Table(name = "Offering")
 @Getter
 @Setter
-public class Offering {
+public class OfferingEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -23,6 +21,9 @@ public class Offering {
     @ManyToOne
     @JoinColumn(name = "church_member_id", referencedColumnName = "id")
     private ChurchMemberEntity churchMember;
+
+    @Column(name = "type", length = 20, nullable = false)
+    private String type;
 
     @Column(name = "amount", columnDefinition = "int unsigned", nullable = false)
     private int amount;
