@@ -88,9 +88,11 @@ public class OfferingService {
         return OfferingResponse.of(offeringEntity);
     }
 
-    public Page<OfferingResponse> getOfferings(int page, int size) {
+    public Page<OfferingResponse> getOfferings(
+            int page, int size,
+            LocalDate date, String type, String churchMemberId) {
         PageRequest pageable = PageRequest.of(page, size);
-        Page<OfferingResponse> result = offeringRepository.findAll(pageable)
+        Page<OfferingResponse> result = offeringRepository.getOfferings(date,type, churchMemberId, pageable)
                 .map(OfferingResponse::of);
         return result;
 

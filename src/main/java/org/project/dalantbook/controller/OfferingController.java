@@ -65,7 +65,10 @@ public class OfferingController {
     @GetMapping()
     public Response<Page<OfferingResponse>> getOfferings(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
-        return Response.success(offeringService.getOfferings(page, size));
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(required = false) String churchMemberId,
+            @RequestParam(required = false) String type,
+            @RequestParam(required = false) LocalDate date) {
+        return Response.success(offeringService.getOfferings(page, size, date, type, churchMemberId));
     }
 }
