@@ -6,8 +6,10 @@ import org.project.dalantbook.controller.request.OfferingUpdateRequest;
 import org.project.dalantbook.controller.request.OfferingsCreateRequest;
 import org.project.dalantbook.controller.response.ChurchMemberResponse;
 import org.project.dalantbook.controller.response.OfferingResponse;
+import org.project.dalantbook.domain.AccountEntity;
 import org.project.dalantbook.domain.ChurchMemberEntity;
 import org.project.dalantbook.domain.OfferingEntity;
+import org.project.dalantbook.domain.respository.AccountRepository;
 import org.project.dalantbook.domain.respository.ChurchMemberRepository;
 import org.project.dalantbook.domain.respository.OfferingBulkRepository;
 import org.project.dalantbook.domain.respository.OfferingRepository;
@@ -29,6 +31,7 @@ public class OfferingService {
     private final ChurchMemberRepository churchMemberRepository;
     private final OfferingRepository offeringRepository;
     private final OfferingBulkRepository offeringBulkRepository;
+    private final AccountRepository accountRepository;
 
 
     public List<ChurchMemberResponse> getPrepareOfferings(String type, LocalDate date) {
@@ -92,9 +95,14 @@ public class OfferingService {
 
     public Page<OfferingResponse> getOfferings(
             int page, int size,
-            LocalDate date, String type, String churchMemberId) {
+            LocalDate date, String type, String churchMemberId,
+            String userId) {
+        AccountEntity accountEntity = accountRepository.findByUserId(userId).orElseThrow(() ->
+                new DalantBookApplicationException(ErrorCode.NOT_FOUND_ACCOUNT));
+
         PageRequest pageable = PageRequest.of(page, size);
-        Page<OfferingResponse> result = offeringRepository.getOfferings(date,type, churchMemberId, pageable)
+        Page<OfferingResponse> result = offeringRepository
+                .getOfferings(date,type, churchMemberId, accountEntity.getChurch(), pageable)
                 .map(OfferingResponse::of);
         return result;
 
