@@ -1,6 +1,7 @@
 package org.project.dalantbook.domain.respository;
 
 import lombok.RequiredArgsConstructor;
+import org.project.dalantbook.domain.ChurchEntity;
 import org.project.dalantbook.domain.ChurchMemberEntity;
 import org.project.dalantbook.domain.OfferingEntity;
 import org.springframework.data.domain.Page;
@@ -20,11 +21,13 @@ public interface OfferingRepository extends JpaRepository<OfferingEntity, String
             "from OfferingEntity as o " +
             "where (:date is null or DATE_FORMAT(o.date, '%Y-%m-%d') = :date) " +
             "   and (:type is null or o.type = :type) " +
-            "   and (:churchMemberId is null or o.churchMember.id = :churchMemberId)")
+            "   and (:churchMemberId is null or o.churchMember.id = :churchMemberId) " +
+            "   and (o.churchMember.church = :church)")
     Page<OfferingEntity> getOfferings(
             @Param("date") LocalDate date,
             @Param("type") String type,
             @Param("churchMemberId") String churchMemberId,
+            @Param("church") ChurchEntity churchEntity,
             Pageable pageable
     );
 

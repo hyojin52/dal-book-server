@@ -9,6 +9,7 @@ import org.project.dalantbook.controller.response.OfferingResponse;
 import org.project.dalantbook.controller.response.Response;
 import org.project.dalantbook.service.OfferingService;
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -68,7 +69,8 @@ public class OfferingController {
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(required = false) String churchMemberId,
             @RequestParam(required = false) String type,
-            @RequestParam(required = false) LocalDate date) {
-        return Response.success(offeringService.getOfferings(page, size, date, type, churchMemberId));
+            @RequestParam(required = false) LocalDate date,
+            Authentication authentication) {
+        return Response.success(offeringService.getOfferings(page, size, date, type, churchMemberId, authentication.getName()));
     }
 }

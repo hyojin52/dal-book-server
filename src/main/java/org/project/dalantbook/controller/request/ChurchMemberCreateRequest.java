@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class ChurchMemberCreateRequest {
-    private String churchId;
     private String name;
     private String memo;
 }
