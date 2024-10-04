@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
+import org.project.dalantbook.domain.enums.AccountRole;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -17,10 +18,10 @@ import java.util.Date;
 @Where(clause = "deleted_at is NULL")
 @Getter
 @Setter
-public class AccountEntity {
+public class AccountEntity extends AbstractAuditingEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id", columnDefinition = "VARCHAR(100)", nullable = false, length = 100)
+    @Column(name = "id", nullable = false, length = 100)
     private String id;
 
     @ManyToOne
@@ -36,4 +37,8 @@ public class AccountEntity {
     @Column(name = "deleted_at")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd@HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime deletedAt;
+
+    @Column(name = "role", length = 10, nullable = false)
+    @Enumerated(EnumType.STRING)
+    private AccountRole role;
 }
