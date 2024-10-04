@@ -6,6 +6,8 @@ import org.project.dalantbook.controller.request.ChurchRequest;
 import org.project.dalantbook.controller.response.ChurchResponse;
 import org.project.dalantbook.domain.ChurchEntity;
 import org.project.dalantbook.domain.respository.ChurchRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -24,4 +26,10 @@ public class ChurchService {
         ChurchEntity saved = churchRepository.save(churchEntity);
         return ChurchResponse.of(saved);
     }
+
+    public Page<ChurchResponse> getChurch(int page, int size) {
+        PageRequest pageable = PageRequest.of(page, size);
+        return churchRepository.findAll(pageable).map(ChurchResponse::of);
+    }
+
 }
