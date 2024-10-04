@@ -21,4 +21,6 @@ spring:
     username: root
     password: ${DB_PASSWORD}
 
-
+jwt:
+  secret-key: dalantbook-application-2024.secret_key
+  token.expired-time-ms: 2592000000 # 30 days
