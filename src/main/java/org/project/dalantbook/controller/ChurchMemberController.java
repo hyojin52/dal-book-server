@@ -7,6 +7,7 @@ import org.project.dalantbook.controller.response.ChurchMemberResponse;
 import org.project.dalantbook.controller.response.Response;
 import org.project.dalantbook.service.ChurchMemberService;
 import org.springframework.data.domain.Page;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,8 +18,10 @@ public class ChurchMemberController {
     private final ChurchMemberService churchMemberService;
 
     @PostMapping
-    public Response<Void> createChurchMember(@RequestBody ChurchMemberCreateRequest request) {
-        churchMemberService.create(request);
+    public Response<Void> createChurchMember(
+            @RequestBody ChurchMemberCreateRequest request,
+            Authentication authentication) {
+        churchMemberService.create(request, authentication.getName());
         return Response.success();
     }
 
@@ -36,9 +39,10 @@ public class ChurchMemberController {
     @GetMapping
     public Response<Page<ChurchMemberResponse>> getChurchMembers(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size
+            @RequestParam(defaultValue = "10") int size,
+            Authentication authentication
     ) {
-        return Response.success(churchMemberService.getChurchMembers(page,size));
+        return Response.success(churchMemberService.getChurchMembers(page,size, authentication.getName()));
     }
 
     @PutMapping("{churchMemberId}")
